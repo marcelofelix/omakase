@@ -1,0 +1,40 @@
+### General
+
+.vagrant
+
+### Server
+.springBeans
+server/**/target/
+*.classpath
+*.project
+*.settings/
+*.db
+*.log
+*~
+*.zip
+*.class
+*.idea
+*.iml
+
+### Client
+node_modules
+target
+build
+.gradle
+.sass-cache
+*.sublime-project
+*.sublime-workspace
+client/**/target/
+server/**/solr/data
+server/**/bin/
+.DS_Store
+bin-debug
+bin-release
+html-template
+.externalToolBuilders
+
+### Scripts
+packer_cache/
+output-vagrant/
+scripts/packer/*.pem
+*.box
