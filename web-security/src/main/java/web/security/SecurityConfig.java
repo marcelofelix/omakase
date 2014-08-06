@@ -52,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginProcessingUrl("/api/login")
 				.usernameParameter("username")
 				.passwordParameter("password")
-				.successHandler(successHandler());
+				.successHandler(successHandler())
+				.failureHandler(failureHandler());
 		http.logout().logoutUrl("/api/logout").logoutSuccessHandler(logoutSuccessHandler());
 		http.exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint())
@@ -67,9 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		ShaPasswordEncoder passwordEncoder = new ShaPasswordEncoder(256);
 		auth.eraseCredentials(true)
 				.userDetailsService(userDetailsService)
-				.passwordEncoder(new ShaPasswordEncoder(256));
+				.passwordEncoder(passwordEncoder);
 	}
 
 	@Bean
