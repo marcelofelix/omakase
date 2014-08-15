@@ -25,6 +25,7 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import aleph.TestPersistentContext;
 
@@ -53,7 +54,11 @@ public abstract class AbstractTest {
 				TestPersistentContext.get().clear();
 			}
 		});
+		CharacterEncodingFilter filter = new CharacterEncodingFilter();
+		filter.setForceEncoding(true);
+		filter.setEncoding("UTF-8");
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
+				.addFilter(filter)
 				.addFilter(springSecurityFilterChain)
 				.alwaysDo(print())
 				.build();
