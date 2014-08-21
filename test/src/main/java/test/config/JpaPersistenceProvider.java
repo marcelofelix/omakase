@@ -31,11 +31,11 @@ public class JpaPersistenceProvider implements PersistenceProvider {
 					b.build();
 					em.persist(b.get());
 				}
+				em.flush();
+				em.clear();
+				em.close();
 			}
 		});
-		em.flush();
-		em.clear();
-		em.close();
 
 	}
 
@@ -51,13 +51,19 @@ public class JpaPersistenceProvider implements PersistenceProvider {
 	}
 
 	public void clear() {
-		for (String c : commands) {
-			if (nativeQuery.contains(c)) {
-				em.createNativeQuery(c).executeUpdate();
-			} else {
-				em.createQuery(c).executeUpdate();
+
+		template.execute(new TransactionCallbackWithoutResult() {
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
+				for (String c : commands) {
+					if (nativeQuery.contains(c)) {
+						em.createNativeQuery(c).executeUpdate();
+					} else {
+						em.createQuery(c).executeUpdate();
+					}
+				}
 			}
-		}
+		});
+
 	}
 
 }
