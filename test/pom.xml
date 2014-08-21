@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>omakase</groupId>
 	<artifactId>test</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<properties>
 		<spring.version>4.0.6.RELEASE</spring.version>
 		<spring.security.version>3.2.4.RELEASE</spring.security.version>
@@ -178,7 +178,7 @@
 		<dependency>
 			<groupId>Aleph</groupId>
 			<artifactId>Aleph</artifactId>
-			<version>0.0.2</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>

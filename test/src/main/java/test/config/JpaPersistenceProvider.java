@@ -6,6 +6,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
+
 import aleph.AbstractBuilder;
 import aleph.PersistenceProvider;
 
@@ -16,13 +21,18 @@ public class JpaPersistenceProvider implements PersistenceProvider {
 	@PersistenceContext
 	private EntityManager em;
 
-	public void save(AbstractBuilder<?> builder) {
-		builder.build();
-		em.persist(builder.get());
+	@Autowired
+	private TransactionTemplate template;
 
-	}
-
-	public void close() {
+	public void save(final List<AbstractBuilder<?>> builders) {
+		template.execute(new TransactionCallbackWithoutResult() {
+			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
+				for (AbstractBuilder<?> b : builders) {
+					b.build();
+					em.persist(b.get());
+				}
+			}
+		});
 		em.flush();
 		em.clear();
 		em.close();

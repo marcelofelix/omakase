@@ -20,9 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -49,11 +47,7 @@ public abstract class AbstractTest {
 
 	@Before
 	public void setUp() {
-		template.execute(new TransactionCallbackWithoutResult() {
-			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				TestPersistentContext.get().clear();
-			}
-		});
+		TestPersistentContext.get().clear();
 		CharacterEncodingFilter filter = new CharacterEncodingFilter();
 		filter.setForceEncoding(true);
 		filter.setEncoding("UTF-8");
@@ -65,12 +59,7 @@ public abstract class AbstractTest {
 	}
 
 	protected void saveAll() {
-		template.execute(new TransactionCallbackWithoutResult() {
-			@Override
-			protected void doInTransactionWithoutResult(TransactionStatus status) {
-				TestPersistentContext.get().saveAll();
-			}
-		});
+		TestPersistentContext.get().saveAll();
 	}
 
 	protected void inTransaction(TransactionCallback<Object> action) {
