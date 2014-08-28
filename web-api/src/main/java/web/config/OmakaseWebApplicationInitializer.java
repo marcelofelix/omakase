@@ -28,7 +28,7 @@ public abstract class OmakaseWebApplicationInitializer implements WebApplication
 				.addMappingForUrlPatterns(null, false, "/*");
 
 		container.addFilter("springSecurityFilterChain", new DelegatingFilterProxy("springSecurityFilterChain", appContext))
-				.addMappingForUrlPatterns(null, false, "/api/*");
+				.addMappingForServletNames(null, false, "dispatcher");
 
 		FilterRegistration charEncodingfilterReg = container.addFilter("CharacterEncodingFilter", CharacterEncodingFilter.class);
 		charEncodingfilterReg.setInitParameter("encoding", "UTF-8");

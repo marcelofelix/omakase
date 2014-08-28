@@ -1,5 +1,6 @@
 package test.config;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -90,10 +91,11 @@ public abstract class AbstractTest {
 				.andReturn().getRequest().getSession();
 	}
 
-	protected void signOut() {
-		if (session != null) {
-			session.invalidate();
-			SecurityContextHolder.getContext().setAuthentication(null);
-		}
+	protected void signOut() throws Exception {
+		perform(get("/api/logout")).andExpect(status().isOk());
+//		if (session != null) {
+//			session.invalidate();
+//			SecurityContextHolder.getContext().setAuthentication(null);
+//		}
 	}
 }
