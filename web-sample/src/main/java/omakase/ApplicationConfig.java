@@ -36,7 +36,8 @@ public class ApplicationConfig {
 	@Bean
 	public UserDetailsService userDetailsService() {
 		List<UserDetails> users = new ArrayList<UserDetails>();
-		users.add(new User("Username", "password", asList(new SimpleGrantedAuthority("USER"))));
+		//password = password
+		users.add(new User("Username", "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", asList(new SimpleGrantedAuthority("USER"))));
 		return new InMemoryUserDetailsManager(users);
 	}
 

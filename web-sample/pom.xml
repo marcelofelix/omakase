@@ -4,7 +4,7 @@
 
 	<groupId>omakase</groupId>
 	<artifactId>web-sample</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<packaging>war</packaging>
 
 	<name>web-sample</name>
@@ -18,13 +18,13 @@
 		<dependency>
 			<groupId>omakase</groupId>
 			<artifactId>web-api</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>omakase</groupId>
 			<artifactId>data-jpa</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 
 		<dependency>

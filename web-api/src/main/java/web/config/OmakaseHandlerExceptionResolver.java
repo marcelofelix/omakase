@@ -109,6 +109,7 @@ public class OmakaseHandlerExceptionResolver implements HandlerExceptionResolver
 		} else {
 			httpException = new HttpExceptionBuild(ex, HttpServletResponse.SC_INTERNAL_SERVER_ERROR).build();
 			httpException.addParam("message", ex.getLocalizedMessage());
+			log.error("Internal error", ex);
 		}
 		try {
 			sendError(response, httpException);
