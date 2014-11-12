@@ -1,8 +1,8 @@
 package web.security;
 
-import static web.security.SecurityHelper.isUserLogged;
-
 import java.io.IOException;
+
+import static web.security.SecurityHelper.isUserLogged;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		this.sessionCreationPolicy = sessionCreationPolicy;
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	public void configure(HttpSecurity http) throws Exception {
 		http.sessionManagement().sessionCreationPolicy(sessionCreationPolicy);
 		http.formLogin()
 				.loginProcessingUrl("/api/login")
@@ -58,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint())
 				.accessDeniedHandler(accessDeniedHandler());
+
 		http.authorizeRequests().antMatchers("/api/login").anonymous();
 		http.csrf().disable();
 		if (httpSecurityConfigurer != null) {
@@ -66,8 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		ShaPasswordEncoder passwordEncoder = new ShaPasswordEncoder(256);
 		auth.eraseCredentials(true)
 				.userDetailsService(userDetailsService)
